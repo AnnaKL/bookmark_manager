@@ -1,10 +1,12 @@
-require 'rspec/core/rake_task'
-require 'rubocop/rake_task'
 require 'data_mapper'
 require './app/data_mapper_setup'
 
-RuboCop::RakeTask.new :cop
-RSpec::Core::RakeTask.new :spec
+if RACK_ENV == 'test'
+  require 'rspec/core/rake_task'
+  require 'rubocop/rake_task'
+  RuboCop::RakeTask.new :cop
+  RSpec::Core::RakeTask.new :spec
+end
 
 task default: [:cop, :spec]
 
